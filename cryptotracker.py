@@ -5,7 +5,13 @@ coinMap = {
     1:90,
     2:80,
     3:518,
-    4:2710
+    4:2710,
+    5:58,
+    6:33285,
+    7:48543,
+    8:2713,
+    9:46971,
+    10:2
     }
 
 def choose_coin():
@@ -20,7 +26,7 @@ def choose_coin():
         except:
             print("invalid number")
 
-        break
+        
 
 
 
@@ -41,9 +47,9 @@ def fetch_price(coinID):
 
 def display_price(data):
     print("\nCoin: ", data[0]["symbol"])
-    print("\nPrice: ", data[0]["price_usd"],"$")
-    print("\nChange in 24hour: ", data[0]["percent_change_24h"] ,"%")
-    print("\nMarket cap: ", data[0]["market_cap_usd"],"$")
+    print("Price: $", data[0]["price_usd"])
+    print("Change in 24hour: ", data[0]["percent_change_24h"],"%")
+    print("Market cap: $", data[0]["market_cap_usd"])
 
 def main():
     print(coins)
@@ -58,8 +64,8 @@ def main():
 
 
 print("=======CRYPTO TRACKER=======\n\nChoose number only\n")
-coins = "1 BTC\n2 ETH\n3 USDT \n4 BNB\n"
-options_print = "1 Refresh Price \n2 Change Coin \n3 Exit"
+coins = "1 BTC\n2 ETH\n3 USDT \n4 BNB\n5 XRP\n6 USDC\n7 SOL\n8 TRX\n9 STETH\n10 DOGE"
+options_print = "\n1 Refresh Price \n2 Change Coin \n3 Exit"
 
 def run_tracker(coinID):
         while True:

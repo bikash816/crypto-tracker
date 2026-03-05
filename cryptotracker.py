@@ -1,5 +1,6 @@
 import requests
 import json
+import time
 
 coinMap = {
     1:90,
@@ -61,11 +62,36 @@ def main():
     print(options_print)
     return coinID
 
+def price_alert(target,coinID):
+    while True:
+        data = fetch_price(coinID)
+        current_price = float(data[0]["price_usd"])
+        coin = data[0]["symbol"]
+        if current_price >= target:
+            print(f"ALERT TARGET HIT.{coin}: ${current_price}")
+            message = f"TARGET ALERT \n{coin} reached {current_price}"
+            telegram_alert(message)
+            break
+        print(f"Current price of {coin} is {current_price}")
+        time.sleep(30)
+
+def telegram_alert(message):
+    TOKEN = "enter your bot token"
+    chatID = "enter reciver's chat id"
+    url = f"https://api.telegram.org/bot{TOKEN}/sendMessage"
+    payload = {
+        "chat_id": chatID,
+        "text": message
+    }
+    requests.post(url, data=payload)
+
+
+
 
 
 print("=======CRYPTO TRACKER=======\n\nChoose number only\n")
 coins = "1 BTC\n2 ETH\n3 USDT \n4 BNB\n5 XRP\n6 USDC\n7 SOL\n8 TRX\n9 STETH\n10 DOGE"
-options_print = "\n1 Refresh Price \n2 Change Coin \n3 Exit"
+options_print = "\n1 Refresh Price \n2 Change Coin \n3 SET PRICE ALERT\n4 Exit"
 
 def run_tracker(coinID):
         while True:
@@ -78,9 +104,16 @@ def run_tracker(coinID):
                         print(options_print)
 
                 elif option == 2:
+                    print("\nChoose new coin: ")
                     coinID = main()
             
+                
                 elif option == 3:
+                    target = float(input("\nplease target price target: "))
+                    price_alert(target,coinID)
+                    print(options_print)
+
+                elif option == 4:
                     return
 
                 else:
